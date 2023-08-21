@@ -1,0 +1,42 @@
+{% extends "homepage.html" %}
+
+{% block content%}
+<center>
+    <h1>{{gadget.pname}}</h1>
+    <form method="post" action="/addcart">
+        {% csrf_token %}
+        <table class="table">
+            <tr>
+                <td>Product Name </td>
+                <td>{{gadget.pname}} </td>
+            </tr>
+            <tr><td>Price</td>
+                <td>{{gadget.price}} </td>
+            </tr>
+            <tr><td>Product Description</td>
+                <td>{{gadget.description}} </td>
+            </tr>
+            <tr><td>Quantity</td>
+                <td>{{gadget.qty}} </td>
+            </tr>
+            <tr><td>Price</td>
+                <td>{{gadget.price}} </td>
+            </tr>
+            <tr><td colspan="2" align="center"> <img src="{{gadget.image.url}}" width="200px" height="200px"/> </td></tr>
+            <tr>
+                <td> Quantity</td>
+                <td><select name="qty" class="form-control"  >
+                <option> 1 </option>
+                <option> 2 </option>
+                <option> 3 </option>
+                <option> 4 </option>
+                <option> 5 </option>
+            </select> </td> </tr>
+            <tr><td><button type="submit" class="btn btn-success">ADD TO CART</button></td></tr>
+            <tr><td><input type="hidden" name="gadgetid" value="{{gadget.id}}"/> </td></tr>
+
+            </tr>
+        </table>
+    </form>
+</center>
+{%endblock%}

@@ -1,0 +1,117 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>AJ Electronics</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <style>
+    /* Remove the navbar's default rounded borders and increase the bottom margin */ 
+    .navbar {
+      margin-bottom: 50px;
+      border-radius: 0;
+    }
+    
+    /* Remove the jumbotron's default bottom margin */ 
+     .jumbotron img{
+      margin-bottom: 0;
+      
+      width : 120%;
+      height: 500px;
+      object-position: left;
+    }
+   
+    /* Add a gray background color and some padding to the footer */
+    footer {
+      background-color: #f2f2f2;
+      padding: 25px;
+    }
+  </style>
+</head>
+<body>
+  <div class="jumbotron">
+    <div class="container text-center">
+      <h1>AJ'S Electronics</h1>      
+      <p>India's No.1 Electronics Shop</p>
+    </div>
+  </div>
+  
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>                        
+      </button>
+      {% if "uname" in request.session%}
+        <a class="navbar-brand" href="#">{{request.session.uname}} </a>
+      {% else %}
+        <a class="navbar-brand" href="#">G-Shop</a>
+      {%endif%}
+
+      
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="/">Home</a></li>
+        <li class="dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#">Category
+            <span class="caret"></span></a>
+            <ul class="dropdown-menu">
+                {%for cat in cats%}
+                <li><a href="/ShowGad/{{cat.id}}">{{cat.category_name}} </a></li>
+                {%endfor%}
+             
+            </ul>
+          </li>
+
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        {% if "uname" in request.session%}
+          <li><a href="/ShowItems"><span class="glyphicon glyphicon-shopping-cart"></span> Cart</a></li>
+          <li><a href="/signout"><span class="glyphicon glyphicon-shopping-cart"></span> Sign out</a></li>
+        {% else %}
+          <li><a href="/login"><span class="glyphicon glyphicon-user"></span> Login </a></li>
+          <li><a href="/signup"><span class="glyphicon glyphicon-user"></span> Sign Up </a></li>
+        {%endif%}
+        
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+{%block content %}
+<div class="container">    
+  <div class="row">
+    {% for gadget in gadgets %}
+    <div class="col-sm-4">
+      <div class="panel panel-primary">
+        
+       <div class="panel-body"><center><a href="ViewDetails/{{gadget.id}}"> <img src="{{gadget.image.url}}" class="img-responsive" 
+          style="width:200px;height:200px;" alt="Image"></a></center></div>
+          <div class="panel-heading">{{gadget.pname}} </div>
+        <div class="panel-footer">
+          <p> Price : {{gadget.price}} </p>
+          <a href="ViewDetails/{{gadget.id}}">View Details</a>
+        </div>
+      </div>
+    </div>
+    {%endfor%}
+    
+  </div>
+</div><br><br>
+{%endblock%}
+<footer class="container-fluid text-center">
+  <p>Online Store Copyright</p>  
+  <form class="form-inline">Get deals:
+    <input type="email" class="form-control" size="50" placeholder="Email Address">
+    <button type="button" class="btn btn-danger">Sign Up</button>
+  </form>
+</footer>
+
+</body>
+</html>
